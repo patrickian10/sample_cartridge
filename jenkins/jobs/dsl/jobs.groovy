@@ -63,10 +63,7 @@ buildapplication.with{
 	parameters{
 		stringParam("CUSTOM_WORKSPACE","","")
 	}
-	configure { Project -> Project {
-		assignedNode("WindowsSlave")
-		}
-	}
+
 	
 	
 	scm{
