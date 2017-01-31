@@ -26,19 +26,14 @@ sample_pipeline.with{
 // Job Configuration
 codeanalysis.with{
 
-	configure { Project ->
-        Project / builders << 'hudson.plugins.sonar.SonarRunnerBuilder'{
-            project('')
-            properties('''# Required metadata
-sonar.projectKey=MobileApp
-sonar.projectName=Code_Analysis
-sonar.projectVersion=1.0
-sonar.sources=src
-
-            javaOpts('')
-            additionalArguments('')
-            jdk('(Inherit From Job)')
-            task('')
-        }
-    }
+	publishers{
+		downstreamParameterized{
+		  trigger("Build_Application"){
+				condition("SUCCESS")
+				parameters{
+					predefinedProp("CUSTOM_WORKSPACE",'$WORKSPACE')
+				}
+			}
+		}
+	}
 }
