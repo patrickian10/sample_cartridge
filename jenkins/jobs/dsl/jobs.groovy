@@ -27,10 +27,12 @@ sample_pipeline.with{
 codeanalysis.with{
 
 	scm{
-		configure { project -> project / 'scm' / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' {
-			url('yourgitrepositorey.git')
-			credentialsId('')
-			}
+		git{
+		  remote{
+			url(devopsdemo)
+			credentials('')
+		  }
+		  branch("*/master")
 		}
 	}
 	
