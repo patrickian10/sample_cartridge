@@ -77,7 +77,7 @@ buildapplication.with{
 	}
 	
 	configure { project -> project {
-		assignedNode('WindowsSlave')
+		assignedNode("WindowsSlave")
 		}
 	}
 	
