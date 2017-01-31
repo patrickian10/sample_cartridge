@@ -36,7 +36,6 @@ codeanalysis.with{
 		}
 	}
 	
-	
 	configure { Project -> Project / builders / 'hudson.plugins.sonar.SonarRunnerBuilder'{
             project('')
             properties('''# Required metadata
@@ -50,6 +49,7 @@ sonar.sources=src
             jdk('(Inherit From Job)')
             task('')
         }
+	}
 	
 	publishers{
 		downstreamParameterized{
