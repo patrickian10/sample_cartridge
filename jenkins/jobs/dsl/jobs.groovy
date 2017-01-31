@@ -18,7 +18,27 @@ def sample_pipeline = buildPipelineView(mobileFolderName + "/Mobile_Apps_Pipelin
 
 sample_pipeline.with{
 	title('Mobile_Applications_Pipeline')
-    displayedBuilds(1)
+    displayedBuilds(5)
     selectedJob("/Code_Analysis")
     refreshFrequency(5)
+}
+
+// Job Configuration
+codeanalysis.with{
+
+	configure { Project ->
+        Project / builders << 'hudson.plugins.sonar.SonarRunnerBuilder'{
+            project('')
+            properties('''# Required metadata
+sonar.projectKey=MobileApp
+sonar.projectName=Code_Analysis
+sonar.projectVersion=1.0
+sonar.sources=src
+
+            javaOpts('')
+            additionalArguments('')
+            jdk('(Inherit From Job)')
+            task('')
+        }
+    }
 }
