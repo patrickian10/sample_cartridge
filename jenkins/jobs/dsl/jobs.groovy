@@ -114,7 +114,7 @@ functionaltest.with{
 	}
 	
 	steps{
-		shell'cd v1\nmvn test')
+		shell('cd v1\nmvn test')
 	}
 	
 	publishers{
