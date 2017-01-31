@@ -36,13 +36,13 @@ codeanalysis.with{
 		}
 	}
 	
-	configure { Project -> Project / builders / 'hudson.plugins.sonar.SonarRunnerBuilder'{
+	configure { Project -> Project / builders << 'hudson.plugins.sonar.SonarRunnerBuilder'{
             project('')
             properties('''# Required metadata
 sonar.projectKey=MobileApp
 sonar.projectName=Code_Analysis
 sonar.projectVersion=1.0
-sonar.sources=src
+sonar.sources=src''')
 
             javaOpts('')
             additionalArguments('')
