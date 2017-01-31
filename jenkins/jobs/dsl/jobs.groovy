@@ -162,7 +162,7 @@ deploy.with{
             artifactId('Build_Application-release')
             type('apk')
             classifier('snapshot')
-            file('C:\jenkins\workspace\Devops\Goschedule\Build_Application\build\outputs\apk\Build_Application-release.apk')
+            file('C:\\jenkins\\workspace\\Devops\\Goschedule\\Build_Application\\build\\outputs\\apk\\Build_Application-release.apk')
         }
       }
     }
