@@ -29,8 +29,8 @@ codeanalysis.with{
 	scm{
 		git{
 		  remote{
-			url(devopsdemo)
-			credentials('')
+			url('')
+			credentials("")
 		  }
 		  branch("*/master")
 		}
