@@ -26,6 +26,21 @@ sample_pipeline.with{
 // Job Configuration
 codeanalysis.with{
 
+	scm{
+		git{
+			remote{
+			url('')
+			credentials("")
+			}
+			branch("*/master")
+			extensions {
+				cloneOptions {
+					timeout(60)
+				}
+			}
+		}
+	}
+	
 	publishers{
 		downstreamParameterized{
 		  trigger("Build_Application"){
