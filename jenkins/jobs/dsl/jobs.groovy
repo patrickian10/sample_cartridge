@@ -4,14 +4,12 @@ def projectFolderName = "${PROJECT_NAME}"
 def mobileFolderName =  projectFolderName+ "/Mobile_Apps"
 def mobileFolder = folder(mobileFolderName) { displayName('Mobile Applications') }
 
-
 // Jobs
 def codeanalysis = freeStyleJob(projectFolderName + "/Code_Analysis")
 def buildapplication = freeStyleJob(projectFolderName + "/Build_Application")
 def functionaltest = freeStyleJob(projectFolderName + "/Functional_Test")
 def serverappium = freeStyleJob(projectFolderName + "/Server_Appium")
 def deploy = freeStyleJob(projectFolderName + "/Deploy")
-
 
 //Pipeline
 def sample_pipeline = buildPipelineView(projectFolderName + "/Mobile_Apps_Pipeline")
@@ -24,8 +22,6 @@ sample_pipeline.with{
 }
 
 // Job Configuration
-
-//START OF CODE ANALYSIS JOB CONFIGURATION
 codeanalysis.with{
 
 	configure { Project ->
@@ -55,4 +51,4 @@ sonar.sources=src
 		}
 	}
 }
-//END OF CODE ANALYSIS JOB CONFIGURATION
+
