@@ -36,7 +36,7 @@ codeanalysis.with{
 		}
 	}
 	
-	configure { Project -> Project / builders << 'hudson.plugins.sonar.SonarRunnerBuilder'{
+	configure { Project -> Project / builders << 'hudson.plugins.sonar.SonarRunnerBuilder plugin="sonar@2.4.4"'{
             project('')
             properties('''# Required metadata
 sonar.projectKey=MobileApp
