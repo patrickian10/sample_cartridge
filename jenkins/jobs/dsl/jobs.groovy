@@ -139,7 +139,7 @@ serverappium.with{
 	
 	label("WindowsSlave")
 	
-//	steps{
-//		batchFile("cd C:^\jenkins^\workspace^\Devops^\Goschedule^\Build_Application \n start /B server_appium.bat \n ping 127.0.0.1 -n 300 ^| find \"Reply\" >nul \n @echo off")
-//	}
+	steps{
+		batchFile("cd C\:\\jenkins\\workspace\\Devops\\Goschedule\\Build_Application \n start /B server_appium.bat \n ping 127.0.0.1 -n 300 | find \"Reply\" >nul \n @echo off")
+	}
 }
