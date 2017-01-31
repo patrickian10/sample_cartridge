@@ -6,15 +6,15 @@ def mobileFolder = folder(mobileFolderName) { displayName('Mobile Applications')
 
 
 // Jobs
-def codeanalysis = freeStyleJob(projectFolderName + "/Code_Analysis")
-def buildapplication = freeStyleJob(projectFolderName + "/Build_Application")
-def functionaltest = freeStyleJob(projectFolderName + "/Functional_Test")
-def serverappium = freeStyleJob(projectFolderName + "/Server_Appium")
-def deploy = freeStyleJob(projectFolderName + "/Deploy")
+def codeanalysis = freeStyleJob(mobileFolderName + "/Code_Analysis")
+def buildapplication = freeStyleJob(mobileFolderName + "/Build_Application")
+def functionaltest = freeStyleJob(mobileFolderName + "/Functional_Test")
+def serverappium = freeStyleJob(mobileFolderName + "/Server_Appium")
+def deploy = freeStyleJob(mobileFolderName + "/Deploy")
 
 
 //Pipeline
-def sample_pipeline = buildPipelineView(projectFolderName + "/Mobile_Apps_Pipeline")
+def sample_pipeline = buildPipelineView(mobileFolderName + "/Mobile_Apps_Pipeline")
 
 sample_pipeline.with{
 	title('Mobile_Applications_Pipeline')
