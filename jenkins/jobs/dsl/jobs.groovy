@@ -98,9 +98,4 @@ buildapplication.with{
 		}
 	}
 }
-
-
-
 //END OF BUILD APPLICATION JOB CONFIGURATION//
-
-
