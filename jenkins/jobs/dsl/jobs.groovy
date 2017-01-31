@@ -149,6 +149,23 @@ deploy.with{
 		stringParam("CUSTOM_WORKSPACE","","")
 	}
 
+	steps {
+      nexusArtifactUploader {
+        nexusVersion('nexus2')
+        protocol('http')
+        nexusUrl('34.195.124.220/nexus/content/repositories/releases')
+		groupId('mobile.application.apk')
+        version('0.0.${BUILD_NUMBER}')
+        repository('releases')
+		credentialsId('7fb37f64-d099-496e-aae6-954677137357')
+        artifact {
+            artifactId('Build_Application-release')
+            type('apk')
+            classifier('snapshot')
+            file('C:\jenkins\workspace\Devops\Goschedule\Build_Application\build\outputs\apk\Build_Application-release.apk')
+        }
+      }
+    }
 	
 	
 }
