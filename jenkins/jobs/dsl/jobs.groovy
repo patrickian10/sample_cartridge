@@ -149,6 +149,8 @@ deploy.with{
 		stringParam("CUSTOM_WORKSPACE","","")
 	}
 
+	label("WindowsSlave")
+	
 	steps {
       nexusArtifactUploader {
         nexusVersion('nexus2')
