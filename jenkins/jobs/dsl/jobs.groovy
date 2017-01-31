@@ -40,11 +40,6 @@ buildapplication.with{
 			credentials("")
 			}
 			branch("*/master")
-			extensions {
-				cloneOptions {
-					timeout(60)
-				}
-			}
 		}
 	}
 	steps{
