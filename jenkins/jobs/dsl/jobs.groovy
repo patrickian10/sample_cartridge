@@ -25,7 +25,6 @@ sample_pipeline.with{
 }
 
 // Job Configuration
-
 codeanalysis.with{
 
 	scm{
@@ -37,7 +36,6 @@ codeanalysis.with{
 		  branch("*/master")
 		}
 	}
-	
 	configure { Project -> Project / builders << 'hudson.plugins.sonar.SonarRunnerBuilder'{
             project('')
             properties('''# Required metadata
@@ -52,7 +50,6 @@ sonar.sources=src''')
             task('')
         }
 	}
-	
 	publishers{
 		downstreamParameterized{
 		  trigger("Build_Application"){
@@ -67,6 +64,9 @@ sonar.sources=src''')
 
 buildapplication.with{
 
+	parameters{
+		stringParam("CUSTOM_WORKSPACE","","")
+	}
 	scm{
 		git{
 		  remote{
@@ -76,9 +76,7 @@ buildapplication.with{
 		  branch("*/master")
 		}
 	}
-	
 	label("WindowsSlave")
-	
 	steps{
 		batchFile('Rem delete old build\ngradlew clean')
 		batchFile('Rem build new\ngradlew assembleRelease')
@@ -93,18 +91,13 @@ buildapplication.with{
 			}
 		}
 	}
-	
-	parameters{
-		stringParam("CUSTOM_WORKSPACE","","")
-	}
 }
 
-
 functionaltest.with{
+
 	parameters{
 		stringParam("CUSTOM_WORKSPACE","","")
 	}
-	
 	label("WindowsSlave")
 	quietPeriod(30)
 	scm{
@@ -116,7 +109,6 @@ functionaltest.with{
 		  branch("*/master")
 		}
 	}
-	
 	steps{
 		shell('cd v1\nmvn test')
 	}
@@ -134,24 +126,22 @@ functionaltest.with{
 }
 
 serverappium.with{
+
 	parameters{
 		stringParam("CUSTOM_WORKSPACE","","")
 	}
-	
 	label("WindowsSlave")
-	
 	steps{
 		batchFile("cd C:\\jenkins\\workspace\\Devops\\Goschedule\\Build_Application \nstart /B server_appium.bat \nping 127.0.0.1 -n 300 | find \"Reply\" >nul \n@echo off")
 	}
 }
 
 deploy.with{
+
 	parameters{
 		stringParam("CUSTOM_WORKSPACE","","")
 	}
-
 	label("WindowsSlave")
-	
 	steps {
       nexusArtifactUploader {
         nexusVersion('nexus2')
@@ -169,7 +159,5 @@ deploy.with{
         }
       }
     }
-	
-	
 }
 	
