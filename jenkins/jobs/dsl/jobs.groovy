@@ -14,7 +14,7 @@ def deploy = freeStyleJob(mobileFolderName + "/Deploy")
 
 
 //Pipeline
-def sample_pipeline = buildPipelineView(mobileFolderName + "/Mobile_Apps_Pipeline")
+def sample_pipeline = buildPipelineView(mobileFolderName + "/Mobile_Apps")
 
 sample_pipeline.with{
 	title('Mobile_Applications_Pipeline')
@@ -73,6 +73,21 @@ buildapplication.with{
 			credentials("")
 		  }
 		  branch("*/master")
+		}
+	}
+	
+	steps{
+		batchFile('Rem delete old build\n gradlew clean')
+		batchFile('Rem build new\n gradlew assembleRelease')
+	}
+	publishers{
+		downstreamParameterized{
+		  trigger("Functional_Test,Server_Appium"){
+				condition("SUCCESS")
+				parameters{
+					predefinedProp("CUSTOM_WORKSPACE",'$WORKSPACE')
+				}
+			}
 		}
 	}
 	
