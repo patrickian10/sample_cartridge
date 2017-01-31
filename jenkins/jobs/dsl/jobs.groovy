@@ -77,15 +77,15 @@ buildapplication.with{
 	}
 	
 	steps{
-		batchFile('Rem delete old build\n gradlew clean')
-		batchFile('Rem build new\n gradlew assembleRelease')
+		batchFile('Rem delete old build\ngradlew clean')
+		batchFile('Rem build new\ngradlew assembleRelease')
 	}
 	publishers{
 		downstreamParameterized{
 		  trigger("Functional_Test,Server_Appium"){
 				condition("SUCCESS")
 				parameters{
-					predefinedProp("CUSTOM_WORKSPACE",'$WORKSPACE')
+					predefinedProp("CUSTOM_WORKSPACE",'$CUSTOM_WORKSPACE')
 				}
 			}
 		}
