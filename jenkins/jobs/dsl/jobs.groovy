@@ -76,7 +76,7 @@ buildapplication.with{
 		}
 	}
 	
-	labelExpression('WindowsSlave')
+	labelExpression("WindowsSlave")
 	
 	steps{
 		batchFile('Rem delete old build\ngradlew clean')
