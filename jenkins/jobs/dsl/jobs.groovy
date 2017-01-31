@@ -25,7 +25,7 @@ sample_pipeline.with{
 
 // Job Configuration
 
-//START OF CODE ANALYSIS JOB CONFIGURATION//
+//START OF CODE ANALYSIS JOB CONFIGURATION
 codeanalysis.with{
 
 	configure { Project ->
@@ -55,9 +55,9 @@ sonar.sources=src
 		}
 	}
 }
-//END OF CODE ANALYSIS JOB CONFIGURATION//
+//END OF CODE ANALYSIS JOB CONFIGURATION
 
-//START OF BUILD APPLICATION JOB CONFIGURATION//
+//START OF BUILD APPLICATION JOB CONFIGURATION
 buildapplication.with{
 
 	parameters{
