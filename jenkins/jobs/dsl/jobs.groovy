@@ -19,8 +19,9 @@ def sample_pipeline = buildPipelineView(mobileFolderName + "/Mobile_Apps")
 sample_pipeline.with{
 	title('Mobile_Applications_Pipeline')
     displayedBuilds(5)
-    selectedJob("/Deploy")
-    refreshFrequency(5)
+    selectedJob(mobileFolderName + "/Code_Analysis")
+    showPipelineParameters()
+	refreshFrequency(5)
 }
 
 // Job Configuration
