@@ -76,11 +76,6 @@ buildapplication.with{
 		}
 	}
 	
-	configure { project -> project {
-		assignedNode("WindowsSlave")
-		}
-	}
-	
 	
 	steps{
 		batchFile('Rem delete old build\ngradlew clean')
@@ -100,9 +95,45 @@ buildapplication.with{
 	parameters{
 		stringParam("CUSTOM_WORKSPACE","","")
 	}
+}
+
+
+functionaltest.with{
+	parameters{
+		stringParam("CUSTOM_WORKSPACE","","")
+	}
 	
+	scm{
+		git{
+		  remote{
+			url('')
+			credentials("")
+		  }
+		  branch("*/master")
+		}
+	}
+	
+	steps{
+		shell'cd v1\nmvn test')
+	}
+	
+	publishers{
+		downstreamParameterized{
+		  trigger("Deploy"){
+				condition("SUCCESS")
+				parameters{
+					predefinedProp("CUSTOM_WORKSPACE",'$CUSTOM_WORKSPACE')
+				}
+			}
+		}
+	}
+}
 
-
-
-
+serverappium.with{
+	parameters{
+		stringParam("CUSTOM_WORKSPACE","","")
+	}
+	steps{
+		batchFile('cd C:\jenkins\workspace\Devops\Goschedule\Build_Application\nstart /B server_appium.bat\nping 127.0.0.1 -n 300 | find "Reply" >nul\n@echo off')
+	}
 }
