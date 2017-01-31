@@ -24,7 +24,7 @@ sample_pipeline.with{
 }
 
 // Job Configuration
-//***********************************************************************************************
+
 codeanalysis.with{
 
 	scm{
@@ -63,7 +63,7 @@ sonar.sources=src''')
 		}
 	}
 }
-//***********************************************************************************************
+
 buildapplication.with{
 
 	scm{
@@ -80,12 +80,8 @@ buildapplication.with{
 		stringParam("CUSTOM_WORKSPACE","","")
 	}
 	
-	configure { Project -> Project {
-		assignedNode('WindowsSlave')
-		}
-	}
+
 
 
 
 }
-//***********************************************************************************************
