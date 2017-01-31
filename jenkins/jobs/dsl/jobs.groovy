@@ -32,22 +32,6 @@ codeanalysis.with{
 			credentialsId('')
 			}
 		}
-	
-	}
-
-	scm{
-		git{
-			remote{
-			url('')
-			credentials("")
-			}
-			branch("*/master")
-			extensions {
-				cloneOptions {
-					timeout(60)
-				}
-			}
-		}
 	}
 	
 	publishers{
