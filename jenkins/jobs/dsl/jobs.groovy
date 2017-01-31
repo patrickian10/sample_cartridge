@@ -81,6 +81,7 @@ buildapplication.with{
 		}
 	}
 	
+	
 	steps{
 		batchFile('Rem delete old build\ngradlew clean')
 		batchFile('Rem build new\ngradlew assembleRelease')
