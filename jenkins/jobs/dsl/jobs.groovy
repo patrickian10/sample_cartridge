@@ -19,7 +19,6 @@ sample_pipeline.with{
 	title('Mobile_Applications_Pipeline')
     displayedBuilds(5)
     selectedJob(mobileFolderName + "/Code_Analysis")
-    showPipelineParameters()
 	refreshFrequency(5)
 }
 
