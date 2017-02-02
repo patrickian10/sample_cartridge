@@ -4,7 +4,6 @@ def projectFolderName = "${PROJECT_NAME}"
 def mobileFolderName =  projectFolderName+ "/Mobile_Apps"
 def mobileFolder = folder(mobileFolderName) { displayName('Mobile Applications') }
 
-
 // Jobs
 def codeanalysis = freeStyleJob(mobileFolderName + "/Code_Analysis")
 def buildapplication = freeStyleJob(mobileFolderName + "/Build_Application")
@@ -27,11 +26,18 @@ sample_pipeline.with{
 // Job Configuration
 codeanalysis.with{
 
+	parameters{
+	    stringParam("application_name","","Application name of APK")
+		stringParam("git_url","","URL of the git repository that contains the project")
+		stringParam("source_name","","Folder name of the codes to build ( e.g, src )")
+		stringParam("test_name","","Folder name of the codes for Functional test")
+		stringParam("ip","","Public IP of your server")
+	}
 	scm{
 		git{
 		  remote{
-			url('')
-			credentials("")
+			url('git_url')
+			credentials("adop-jenkins-master")
 		  }
 		  branch("*/master")
 		}
@@ -42,7 +48,7 @@ codeanalysis.with{
 sonar.projectKey=MobileApp
 sonar.projectName=Code_Analysis
 sonar.projectVersion=1.0
-sonar.sources=src''')
+sonar.sources=$source_name''')
 
             javaOpts('')
             additionalArguments('')
@@ -56,6 +62,11 @@ sonar.sources=src''')
 				condition("SUCCESS")
 				parameters{
 					predefinedProp("CUSTOM_WORKSPACE",'$WORKSPACE')
+					predefinedProp("git_url",'$git_url')
+					predefinedProp("application_name",'$application_name')
+					predefinedProp("source_name",'$source_name')
+					predefinedProp("test_name",'$test_name')
+					predefinedProp("ip",'$ip')
 				}
 			}
 		}
@@ -66,12 +77,17 @@ buildapplication.with{
 
 	parameters{
 		stringParam("CUSTOM_WORKSPACE","","")
+		stringParam("application_name","","Application name of APK")
+		stringParam("git_url","","URL of the git repository that contains the project")
+		stringParam("source_name","","Folder name of the codes to build ( e.g, src )")
+		stringParam("test_name","","Folder name of the codes for Functional test")
+		stringParam("ip","","Public IP of your server")
 	}
 	scm{
 		git{
 		  remote{
-			url('')
-			credentials("")
+			url('git_url')
+			credentials("adop-jenkins-master")
 		  }
 		  branch("*/master")
 		}
@@ -87,6 +103,11 @@ buildapplication.with{
 				condition("SUCCESS")
 				parameters{
 					predefinedProp("CUSTOM_WORKSPACE",'$CUSTOM_WORKSPACE')
+					predefinedProp("git_url",'$git_url')
+					predefinedProp("application_name",'$application_name')
+					predefinedProp("source_name",'$source_name')
+					predefinedProp("test_name",'$test_name')
+					predefinedProp("ip",'$ip')
 				}
 			}
 		}
@@ -97,20 +118,25 @@ functionaltest.with{
 
 	parameters{
 		stringParam("CUSTOM_WORKSPACE","","")
+		stringParam("application_name","","Application name of APK")
+		stringParam("git_url","","URL of the git repository that contains the project")
+		stringParam("source_name","","Folder name of the codes to build ( e.g, src )")
+		stringParam("test_name","","Folder name of the codes for Functional test")
+		stringParam("ip","","Public IP of your server")
 	}
 	label("WindowsSlave")
 	quietPeriod(30)
 	scm{
 		git{
 		  remote{
-			url('')
-			credentials("")
+			url('git_url')
+			credentials("adop-jenkins-master")
 		  }
 		  branch("*/master")
 		}
 	}
 	steps{
-		shell('cd v1\nmvn test')
+		shell('cd $test_name\nmvn test')
 	}
 	
 	publishers{
@@ -119,6 +145,11 @@ functionaltest.with{
 				condition("SUCCESS")
 				parameters{
 					predefinedProp("CUSTOM_WORKSPACE",'$CUSTOM_WORKSPACE')
+					predefinedProp("git_url",'$git_url')
+					predefinedProp("application_name",'$application_name')
+					predefinedProp("source_name",'$source_name')
+					predefinedProp("test_name",'$test_name')
+					predefinedProp("ip",'$ip')
 				}
 			}
 		}
@@ -129,10 +160,15 @@ serverappium.with{
 
 	parameters{
 		stringParam("CUSTOM_WORKSPACE","","")
+		stringParam("application_name","","Application name of APK")
+		stringParam("git_url","","URL of the git repository that contains the project")
+		stringParam("source_name","","Folder name of the codes to build ( e.g, src )")
+		stringParam("test_name","","Folder name of the codes for Functional test")
+		stringParam("ip","","Public IP of your server")
 	}
 	label("WindowsSlave")
 	steps{
-		batchFile("cd C:\\jenkins\\workspace\\Devops\\Goschedule\\Build_Application \nstart /B server_appium.bat \nping 127.0.0.1 -n 300 | find \"Reply\" >nul \n@echo off")
+		batchFile("cd C:\\jenkins\\workspace\\${WORKSPACE_NAME}\\${PROJECT_NAME}\\Mobile_Apps\\Build_Application \nstart /B server_appium.bat \nping 127.0.0.1 -n 300 | find \"Reply\" >nul \n@echo off")
 	}
 }
 
@@ -140,22 +176,27 @@ deploy.with{
 
 	parameters{
 		stringParam("CUSTOM_WORKSPACE","","")
+		stringParam("application_name","","Application name of APK")
+		stringParam("git_url","","URL of the git repository that contains the project")
+		stringParam("source_name","","Folder name of the codes to build ( e.g, src )")
+		stringParam("test_name","","Folder name of the codes for Functional test")
+		stringParam("ip","","Public IP of your server")
 	}
 	label("WindowsSlave")
 	steps {
       nexusArtifactUploader {
         nexusVersion('nexus2')
         protocol('http')
-        nexusUrl('34.195.124.220/nexus/content/repositories/releases')
+        nexusUrl('$ip/nexus/content/repositories/releases')
 		groupId('mobile.application.apk')
         version('0.0.${BUILD_NUMBER}')
         repository('releases')
 		credentialsId('7fb37f64-d099-496e-aae6-954677137357')
         artifact {
-            artifactId('Build_Application-release')
+            artifactId('$application_name')
             type('apk')
             classifier('snapshot')
-            file('C:\\jenkins\\workspace\\Devops\\Goschedule\\Build_Application\\build\\outputs\\apk\\Build_Application-release.apk')
+            file('C:\\jenkins\\workspace\\${WORKSPACE_NAME}\\${PROJECT_NAME}\\Mobile_Apps\\Build_Application\\build\\outputs\\apk\\$application_name.apk')
         }
       }
     }
