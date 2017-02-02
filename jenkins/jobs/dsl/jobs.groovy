@@ -36,7 +36,7 @@ codeanalysis.with{
 	scm{
 		git{
 		  remote{
-			url('git_url')
+			url('$git_url')
 			credentials("adop-jenkins-master")
 		  }
 		  branch("*/master")
@@ -86,7 +86,7 @@ buildapplication.with{
 	scm{
 		git{
 		  remote{
-			url('git_url')
+			url('$git_url')
 			credentials("adop-jenkins-master")
 		  }
 		  branch("*/master")
@@ -129,7 +129,7 @@ functionaltest.with{
 	scm{
 		git{
 		  remote{
-			url('git_url')
+			url('$git_url')
 			credentials("adop-jenkins-master")
 		  }
 		  branch("*/master")
